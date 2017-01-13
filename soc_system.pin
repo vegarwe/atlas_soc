@@ -1,11 +1,11 @@
- -- Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+ -- Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
  -- Your use of Altera Corporation's design tools, logic functions 
  -- and other software and tools, and its AMPP partner logic 
  -- functions, and any output files from any of the foregoing 
  -- (including device programming or simulation files), and any 
  -- associated documentation or information are expressly subject 
  -- to the terms and conditions of the Altera Program License 
- -- Subscription Agreement, the Altera Quartus II License Agreement,
+ -- Subscription Agreement, the Altera Quartus Prime License Agreement,
  -- the Altera MegaCore Function License Agreement, or other 
  -- applicable license agreement, including, without limitation, 
  -- that your use is for the sole purpose of programming logic 
@@ -13,10 +13,10 @@
  -- authorized distributors.  Please refer to the applicable 
  -- agreement for further details.
  -- 
- -- This is a Quartus II output file. It is for reporting purposes only, and is
- -- not intended for use as a Quartus II input file. This file cannot be used
- -- to make Quartus II pin assignments - for instructions on how to make pin
- -- assignments, please see Quartus II help.
+ -- This is a Quartus Prime output file. It is for reporting purposes only, and is
+ -- not intended for use as a Quartus Prime input file. This file cannot be used
+ -- to make Quartus Prime pin assignments - for instructions on how to make pin
+ -- assignments, please see Quartus Prime help.
  ---------------------------------------------------------------------------------
 
 
@@ -72,7 +72,7 @@
  -- Pin directions (input, output or bidir) are based on device operating in user mode.
  ---------------------------------------------------------------------------------
 
-Quartus II 64-Bit Version 15.0.0 Build 145 04/22/2015 SJ Full Version
+Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
 CHIP  "soc_system"  ASSIGNED TO AN: 5CSEMA4U23C6
 
 Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
@@ -115,7 +115,7 @@ VCCPD3A                      : AA10      : power  :                   : 3.3V    
 RESERVED_INPUT_WITH_WEAK_PULLUP : AA11      :        :                   :         : 3A        :                
 VCCIO3B                      : AA12      : power  :                   : 3.3V    : 3B        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AA13      :        :                   :         : 4A        :                
-VCCPD3B4A                    : AA14      : power  :                   : 3.3V    :           :                
+VCCPD3B4A                    : AA14      : power  :                   : 3.3V    : 3B, 4A    :                
 GPIO_1[2]                    : AA15      : bidir  : 3.3-V LVTTL       :         : 4A        : Y              
 VCCIO4A                      : AA16      : power  :                   : 3.3V    : 4A        :                
 GND                          : AA17      : gnd    :                   :         :           :                
@@ -165,19 +165,19 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AD5       :        :                   :      
 GND                          : AD6       : gnd    :                   :         :           :                
 AS_DATA0, ASDO, DATA0        : AD7       :        :                   :         : 3A        :                
 GND                          : AD8       : gnd    :                   :         :           :                
-VCCPD3B4A                    : AD9       : power  :                   : 3.3V    :           :                
+VCCPD3B4A                    : AD9       : power  :                   : 3.3V    : 3B, 4A    :                
 GPIO_0[28]                   : AD10      : bidir  : 3.3-V LVTTL       :         : 3B        : Y              
 GPIO_0[30]                   : AD11      : bidir  : 3.3-V LVTTL       :         : 3B        : Y              
 GPIO_0[32]                   : AD12      : bidir  : 3.3-V LVTTL       :         : 3B        : Y              
-VCCPD3B4A                    : AD13      : power  :                   : 3.3V    :           :                
+VCCPD3B4A                    : AD13      : power  :                   : 3.3V    : 3B, 4A    :                
 GND                          : AD14      : gnd    :                   :         :           :                
 VCC_AUX                      : AD15      : power  :                   : 2.5V    :           :                
-VCCPD3B4A                    : AD16      : power  :                   : 3.3V    :           :                
+VCCPD3B4A                    : AD16      : power  :                   : 3.3V    : 3B, 4A    :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : AD17      :        :                   :         : 4A        :                
-VCCPD3B4A                    : AD18      : power  :                   : 3.3V    :           :                
+VCCPD3B4A                    : AD18      : power  :                   : 3.3V    : 3B, 4A    :                
 GPIO_1[22]                   : AD19      : bidir  : 3.3-V LVTTL       :         : 4A        : Y              
 GPIO_1[25]                   : AD20      : bidir  : 3.3-V LVTTL       :         : 4A        : Y              
-VCCPD3B4A                    : AD21      : power  :                   : 3.3V    :           :                
+VCCPD3B4A                    : AD21      : power  :                   : 3.3V    : 3B, 4A    :                
 GND                          : AD22      : gnd    :                   :         :           :                
 GPIO_1[32]                   : AD23      : bidir  : 3.3-V LVTTL       :         : 4A        : Y              
 VCCPGM                       : AD24      : power  :                   : 1.8V/2.5V/3.0V/3.3V :           :                
@@ -369,7 +369,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : D15       :        :                   :      
 GND                          : D16       : gnd    :                   :         :           :                
 HPS_ENET_TX_DATA[3]          : D17       : output : 3.3-V LVTTL       :         : 7B        : Y              
 VCCIO7A_HPS                  : D18       : power  :                   : 3.3V    : 7A        :                
-VREFB7A7B7C7DN0_HPS          : D19       : power  :                   :         :           :                
+VREFB7A7B7C7DN0_HPS          : D19       : power  :                   :         : 7A, 7B, 7C, 7D :                
 HPS_CLK2                     : D20       :        :                   :         : 7A        :                
 GND                          : D21       :        :                   :         : 7A        :                
 HPS_TDI                      : D22       :        :                   :         : 7A        :                
@@ -503,8 +503,8 @@ VCC_HPS                      : K17       : power  :                   : 1.1V    
 HPS_I2C1_SCLK                : K18       : bidir  : 3.3-V LVTTL       :         : 7A        : Y              
 HPS_TCK                      : K19       :        :                   :         : 7A        :                
 GND                          : K20       : gnd    :                   :         :           :                
-VCCPD6A6B_HPS                : K21       : power  :                   : 2.5V    :           :                
-VCCPD6A6B_HPS                : K24       : power  :                   : 2.5V    :           :                
+VCCPD6A6B_HPS                : K21       : power  :                   : 2.5V    : 6A, 6B    :                
+VCCPD6A6B_HPS                : K24       : power  :                   : 2.5V    : 6A, 6B    :                
 HPS_DDR3_DQ[8]               : K25       : bidir  : SSTL-15 Class I   :         : 6A        : N              
 HPS_DDR3_DQ[5]               : K26       : bidir  : SSTL-15 Class I   :         : 6A        : N              
 RESERVED_INPUT_WITH_WEAK_PULLUP : K27       :        :                   :         : 6A        :                
@@ -552,7 +552,7 @@ VCC_HPS                      : M18       : power  :                   : 1.1V    
 VCC_HPS                      : M19       : power  :                   : 1.1V    :           :                
 GND                          : M20       : gnd    :                   :         :           :                
 VCCIO6A_HPS                  : M21       : power  :                   : 1.5V    : 6A        :                
-VCCPD6A6B_HPS                : M24       : power  :                   : 2.5V    :           :                
+VCCPD6A6B_HPS                : M24       : power  :                   : 2.5V    : 6A, 6B    :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : M25       :        :                   :         : 6A        :                
 HPS_DDR3_DQ[13]              : M26       : bidir  : SSTL-15 Class I   :         : 6A        : N              
 HPS_DDR3_DQ[12]              : M27       : bidir  : SSTL-15 Class I   :         : 6A        : N              
@@ -599,8 +599,8 @@ VCC_HPS                      : P17       : power  :                   : 1.1V    
 GND                          : P18       : gnd    :                   :         :           :                
 VCC_HPS                      : P19       : power  :                   : 1.1V    :           :                
 GND                          : P20       : gnd    :                   :         :           :                
-VCCPD6A6B_HPS                : P21       : power  :                   : 2.5V    :           :                
-VCCPD6A6B_HPS                : P24       : power  :                   : 2.5V    :           :                
+VCCPD6A6B_HPS                : P21       : power  :                   : 2.5V    : 6A, 6B    :                
+VCCPD6A6B_HPS                : P24       : power  :                   : 2.5V    : 6A, 6B    :                
 GND                          : P25       : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : P26       :        :                   :         : 6B        :                
 VCCIO6B_HPS                  : P27       : power  :                   : 1.5V    : 6B        :                

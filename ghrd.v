@@ -223,7 +223,8 @@ module ghrd(
 	  .hps_0_hps_io_hps_io_gpio_inst_GPIO54  ( HPS_KEY   ),  //                               .hps_io_gpio_inst_GPIO54
 	  .hps_0_hps_io_hps_io_gpio_inst_GPIO61  ( HPS_GSENSOR_INT ),  //                               .hps_io_gpio_inst_GPIO61
 		//FPGA Partion
-        .custom_leds_0_leds_leds               (LED),               //             custom_leds_0_leds.leds
+	  .custom_leds_0_leds_leds               (LED),               //             custom_leds_0_leds.leds
+	  .custom_leds_0_gpio0_gpio0             (GPIO_0),
 	  .dipsw_pio_external_connection_export  ( SW	),  //  dipsw_pio_external_connection.export
 	  .button_pio_external_connection_export ( fpga_debounced_buttons	), // button_pio_external_connection.export
 	  .hps_0_h2f_reset_reset_n               ( hps_fpga_reset_n ),                //                hps_0_h2f_reset.reset_n
