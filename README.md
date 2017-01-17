@@ -1,3 +1,19 @@
+## Building software
+
+export CROSS_COMPILE=/home/vegarwe/devel/atlas_soc/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf-
+
+Ethernet chip: KSZ9031RN
+
+## u-boot-socfpga
+
+HEAD detached at rel_socfpga_v2013.01.01_15.09.01_pr
+https://github.com/altera-opensource/u-boot-socfpga.git
+
+
+## Resources:
+* https://rocketboards.org/foswiki/view/Documentation/EmbeddedLinuxBeginnerSGuide
+* https://eewiki.net/display/linuxonarm/DE0-Nano-SoC+Kit
+
 ## Programing FPGA
 To program with quartus, choose 5CSEMA4 (use chain file: soc_system.cdf)
 
