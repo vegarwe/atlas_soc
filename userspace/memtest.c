@@ -16,16 +16,15 @@
 
 int main(int argc, char ** argv)
 {
-    void * lw_bridge_map = 0;
-    uint32_t * custom_led_map = 0;
-    int devmem_fd = 0;
-    int result = 0;
-    uint32_t blink_times = 0;
+    void       *lw_bridge_map   = 0;
+    uint32_t   *custom_led_map  = 0;
+    int         devmem_fd       = 0;
+    int         result          = 0;
+    uint32_t    blink_times     = 0;
 
     // Check to make sure they entered a valid input value
-    if(argc != 2)
-    {
-        printf("Please enter only one argument that specifies the number of times to blink the LEDs\n");
+    if (argc != 2) {
+        printf("Please enter a 32-bit number in decimal\n");
         exit(EXIT_FAILURE);
     }
 
@@ -50,22 +49,7 @@ int main(int argc, char ** argv)
     // Set the custom_led_map to the correct offset within the RAM (CUSTOM_LEDS_0_BASE is from "hps_0.h")
     custom_led_map = (uint32_t*)(lw_bridge_map + CUSTOM_LEDS_0_BASE);
 
-    // Blink the LED ten times
-    //printf("Blinking LEDs %d times...\n", blink_times);
-    //for(int i = 0; i < blink_times; ++i) {
-    //    // Turn all LEDs on
-    //    *custom_led_map = 0xFF;
-
-    //    // Wait half a second
-    //    usleep(500000);
-
-    //    // Turn all the LEDS off
-    //    *custom_led_map = 0x00;
-
-    //    // Wait half a second
-    //    usleep(500000);
-    //}
-
+    // Blink the LED three times
     for(uint32_t i = 0; i < 3; ++i) {
         *custom_led_map = 0xffffffff;
         usleep(250000);
@@ -73,18 +57,13 @@ int main(int argc, char ** argv)
         usleep(250000);
     }
 
-    usleep(500000);
-    //*custom_led_map = 0x00;
-
     printf("Setting custom_led_map to %u\n", blink_times);
     *custom_led_map = blink_times;
 
-    usleep(500000);
+    usleep(250000);
 
     blink_times = *custom_led_map;
     printf("custom_led_map value %u\n", blink_times);
-
-    printf("Done!\n");
 
     // Unmap everything and close the /dev/mem file descriptor
     result = munmap(lw_bridge_map, HPS_TO_FPGA_LW_SPAN);

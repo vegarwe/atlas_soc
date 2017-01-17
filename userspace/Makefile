@@ -1,4 +1,4 @@
-TARGET = devmem_demo
+TARGET = memtest
 
 CFLAGS = -static -g -Wall -std=gnu99
 LDFLAGS = -g -Wall
