@@ -1,3 +1,12 @@
+## Programing FPGA
+To program with quartus, choose 5CSEMA4 (use chain file: soc_system.cdf)
+
+Within Quartus, open up the Convert Programming Files window (File->Convert Programming Files).
+In “Programming file type” select “Raw Binary File (.rbf)”
+In “Mode” select “Passive Parallel x16” (this is the default mode for programming from Linux).
+Choose a name for the resulting file (I named mine soc_system.rbf).
+Click on “SOF Data” in the “Input files to convert” section and then click the “Add File…” button and browse for your .sof file.
+Your window should like the one below:
 
 ## To build working sd memory card:
 Device         Boot    Start      End  Sectors  Size Id Type
