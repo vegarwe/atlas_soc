@@ -12,7 +12,7 @@
 #define HPS_TO_FPGA_LW_BASE 0xFF200000
 #define HPS_TO_FPGA_LW_SPAN 0x0020000
 
-// export CROSS_COMPILE=/home/vegarwe/devel/atlas_soc/atlas_linux_ghrd/software/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf-
+// export CROSS_COMPILE=/home/vegarwe/devel/atlas_soc/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf-
 
 int main(int argc, char ** argv)
 {
