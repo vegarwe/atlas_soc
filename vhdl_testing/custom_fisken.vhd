@@ -1,0 +1,1 @@
+../atlas_linux_ghrd/soc_system/synthesis/submodules/custom_fisken.vhd
