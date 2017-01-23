@@ -1,9 +1,9 @@
 library ieee ;
     use ieee.std_logic_1164.all;
---    use ieee.std_logic_unsigned.all;
---    use ieee.std_logic_textio.all;
+    use ieee.numeric_std.all;
+    use ieee.std_logic_textio.all;
 
---use std.textio.all;
+use std.textio.all;
 
 entity custom_fisken_tb is
 end;
@@ -19,16 +19,16 @@ architecture custom_fisken_tb of custom_fisken_tb is
     signal   gpio0      : std_logic_vector(35 downto 0);
 
 begin
-    --dut : entity work.custom_fisken
-    --port map (
-    --   gpio0    => gpio0,
-    --   led_o    => led_o,
-    --   fisken_o => fisken_o,
-    --   fisken_i => fisken_i,
-    --   btn_i    => btn_i,
-    --   reset    => reset,
-    --   clk      => clk
-    --);
+    dut : entity work.custom_fisken
+    port map (
+       gpio0    => gpio0,
+       led_o    => led_o,
+       fisken_o => fisken_o,
+       fisken_i => fisken_i,
+       btn_i    => btn_i,
+       reset    => reset,
+       clk      => clk
+    );
 
     clock : process
     begin
