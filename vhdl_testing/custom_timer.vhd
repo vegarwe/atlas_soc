@@ -4,15 +4,22 @@ library ieee;
 
 entity custom_timer is
     port(
-        cc_1            : inout std_logic_vector(31 downto 0)   := (others => '0');
+        cc_0_out        : out   std_logic_vector(31 downto 0)   := (others => '0');
+        cc_0_in         : in    std_logic_vector(31 downto 0);
+        cc_0_latch      : in    std_logic;
+        cc_0_int_clear  : in    std_logic;
+        capture_0       : in    std_logic;
 
-        capture_1       : in    std_logic;
+        cc_1_out        : out   std_logic_vector(31 downto 0)   := (others => '0');
+        cc_1_in         : in    std_logic_vector(31 downto 0);
         cc_1_latch      : in    std_logic;
+        cc_1_int_clear  : in    std_logic;
+        capture_1       : in    std_logic;
 
         prescaler       : in    std_logic_vector(31 downto 0)   := (others => '0');
         prescaler_latch : in    std_logic;
 
-        int_src         : out   std_logic_vector( 3 downto 0)   := (others => '0');
+        int_src         : out   std_logic_vector( 1 downto 0)   := (others => '0');
         interrupt       : out   std_logic                       := '0';
 
         start           : in    std_logic;
@@ -23,34 +30,87 @@ entity custom_timer is
 end entity custom_timer;
 
 architecture behaviour of custom_timer is
-    signal started      : std_logic := '0';
+    signal cc_0_int     : std_logic := '0';
+    signal cc_0_src     : std_logic := '0';
+
     signal cc_1_int     : std_logic := '0';
-    signal cc_1_val     : integer   := 0;
-    signal prescaler_val: integer   := 0;
+    signal cc_1_src     : std_logic := '0';
+
+    signal started      : std_logic := '0';
+    signal prescaler_val: natural   :=  0;
 begin
 
-    p_int_src : process (clk, reset) is
+    interrupt   <= cc_0_int or cc_1_int;
+    int_src(0)  <= cc_0_src;
+    int_src(1)  <= cc_1_src;
+
+    p_cc0 : process (clk, reset) is
+        variable counter    : natural    := 0;
+        variable pre_counter: natural    := 0;
+        variable int_value  : natural    := 0;
     begin
         if (reset = '1') then
-            int_src         <= "0000";
-            interrupt       <= '0';
+            counter     := 0;
+            pre_counter := 0;
+            cc_0_int    <= '0';
+            cc_0_src    <= '0';
+            cc_0_out    <= (others => '0');
         elsif (rising_edge(clk)) then
-            interrupt       <= cc_1_int;
-            if cc_1_int = '1' then
-                int_src(0)  <= '1';
+            if cc_0_int_clear = '1' then
+                cc_0_src <= '0';
+            end if;
+
+            if cc_0_latch = '1' then
+                int_value := to_integer(unsigned(cc_0_in));
+            end if;
+
+            if capture_0 = '1' then
+                cc_0_out <= std_logic_vector(to_unsigned(counter, cc_0_out'length));
+            end if;
+
+            if started = '1' then
+                pre_counter := pre_counter + 1;
+
+                if pre_counter = prescaler_val then
+                    counter     := counter + 1;
+                    pre_counter := 0;
+                end if;
+
+                if cc_0_int = '1' then
+                    cc_0_int    <= '0';
+                elsif int_value > 0 and counter = int_value then
+                    cc_0_int    <= '1';
+                    cc_0_src    <= '1';
+                    counter     := 0;
+                end if;
             end if;
         end if;
-    end process p_int_src;
+    end process p_cc0;
 
     p_cc1 : process (clk, reset) is
-        variable counter    : integer    := 0;
-        variable pre_counter: integer    := 0;
+        variable counter    : natural    := 0;
+        variable pre_counter: natural    := 0;
+        variable int_value  : natural    := 0;
     begin
         if (reset = '1') then
             counter     := 0;
             pre_counter := 0;
             cc_1_int    <= '0';
+            cc_1_src    <= '0';
+            cc_1_out    <= (others => '0');
         elsif (rising_edge(clk)) then
+            if cc_1_int_clear = '1' then
+                cc_1_src <= '0';
+            end if;
+
+            if cc_1_latch = '1' then
+                int_value := to_integer(unsigned(cc_1_in));
+            end if;
+
+            if capture_1 = '1' then
+                cc_1_out <= std_logic_vector(to_unsigned(counter, cc_1_out'length));
+            end if;
+
             if started = '1' then
                 pre_counter := pre_counter + 1;
 
@@ -61,8 +121,9 @@ begin
 
                 if cc_1_int = '1' then
                     cc_1_int    <= '0';
-                elsif counter = cc_1_val then
+                elsif int_value > 0 and counter = int_value then
                     cc_1_int    <= '1';
+                    cc_1_src    <= '1';
                     counter     := 0;
                 end if;
             end if;
@@ -76,10 +137,6 @@ begin
         elsif (rising_edge(clk)) then
             if start = '1' then
                 started <= '1';
-            end if;
-
-            if cc_1_latch = '1' then
-                cc_1_val <= to_integer(unsigned(cc_1));
             end if;
 
             if prescaler_latch = '1' then
