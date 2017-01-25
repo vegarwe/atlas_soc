@@ -143,8 +143,12 @@ begin
                     end if;
                 when 2 =>
                     if btn_i(0) = '0' then
-                        state       := 0;
+                        state       := state + 1;
                         timer_reset <= '1';
+                    end if;
+                when 3 =>
+                    if btn_i(0) = '1' then
+                        state       := 0;
                     end if;
                 when others =>
                     -- Do nothing

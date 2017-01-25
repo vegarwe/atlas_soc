@@ -40,7 +40,7 @@ begin
         reset           <= '1'; wait for 64 ns;
         reset           <= '0'; wait for 25 us;
 
-        -- Button press
+        -- Button press (start)
         wait until rising_edge(clk);
         btn_i(0) <= '0';
         wait until rising_edge(clk);
@@ -51,22 +51,25 @@ begin
         wait until rising_edge(led_o(4));
         wait for 10 us;
 
-        -- Button press
+        -- Button press (stop)
+        wait until rising_edge(clk);
+        btn_i(0) <= '0';
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        btn_i(0) <= '1';
+        wait for 10 us;
+
+
+        -- Button press (start)
         wait until rising_edge(clk);
         btn_i(0) <= '0';
         wait until rising_edge(clk);
         btn_i(0) <= '1';
         wait for 10 us;
 
-
-        -- Button press
-        wait until rising_edge(clk);
-        btn_i(0) <= '0';
-        wait until rising_edge(clk);
-        btn_i(0) <= '1';
-        wait for 10 us;
-
-        -- Wait for trigger
+        -- Button press (stop)
         wait until rising_edge(led_o(4));
         wait for 10 us;
 
