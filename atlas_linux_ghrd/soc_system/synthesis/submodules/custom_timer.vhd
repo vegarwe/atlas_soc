@@ -19,7 +19,7 @@ entity custom_timer is
         prescaler       : in    std_logic_vector(31 downto 0)   := (others => '0');
         prescaler_latch : in    std_logic;
 
-        int_src         : out   std_logic_vector( 1 downto 0)   := (others => '0');
+        interrupt_src   : out   std_logic_vector( 1 downto 0)   := (others => '0');
         interrupt       : out   std_logic                       := '0';
 
         start           : in    std_logic;
@@ -40,9 +40,9 @@ architecture behaviour of custom_timer is
     signal prescaler_val: natural   :=  0;
 begin
 
-    interrupt   <= cc_0_int or cc_1_int;
-    int_src(0)  <= cc_0_src;
-    int_src(1)  <= cc_1_src;
+    interrupt           <= cc_0_int or cc_1_int;
+    interrupt_src(0)    <= cc_0_src;
+    interrupt_src(1)    <= cc_1_src;
 
     p_cc0 : process (clk, reset) is
         variable counter    : natural    := 0;

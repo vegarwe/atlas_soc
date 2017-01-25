@@ -25,7 +25,7 @@ architecture custom_timer_tb of custom_timer_tb is
     signal prescaler        : std_logic_vector(31 downto 0)     := (others => '0');
     signal prescaler_latch  : std_logic                         := '0';
 
-    signal int_src          : std_logic_vector( 1 downto 0);
+    signal interrupt_src    : std_logic_vector( 1 downto 0);
     signal interrupt        : std_logic;
 
     signal start            : std_logic                         := '0';
@@ -51,7 +51,7 @@ begin
         prescaler       => prescaler,
         prescaler_latch => prescaler_latch,
 
-        int_src         => int_src,
+        interrupt_src   => interrupt_src,
         interrupt       => interrupt,
 
         start           => start,
