@@ -133,7 +133,7 @@ begin
                 when 0 =>
                     if btn_i(0) = '0' then
                         state       := state + 1;
-                        cc_0_in     <= x"00000005";
+                        cc_0_in     <= x"000036b0";
                         cc_0_latch  <= '1';
                     end if;
                 when 1 =>
