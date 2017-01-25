@@ -7,8 +7,7 @@ function clean {
 }
 
 function compile {
-    #ghdl -a --workdir=work --std=08 --ieee=standard custom_fisken.vhd
-    ghdl -c --workdir=work --std=08 --ieee=standard custom_fisken.vhd custom_fisken_tb.vhd -e custom_fisken_tb
+    ghdl -c --std=08 --ieee=standard custom_timer.vhd custom_fisken.vhd custom_fisken_tb.vhd -e custom_fisken_tb
 }
 
 function run {

@@ -40,9 +40,11 @@ architecture behaviour of custom_fisken is
     signal interrupt_src    : std_logic_vector( 1 downto 0);
     signal interrupt        : std_logic;
 
-    signal start            : std_logic                         := '0';
-    signal stop             : std_logic                         := '0';
+    signal timer_start      : std_logic                         := '0';
+    signal timer_stop       : std_logic                         := '0';
+    signal timer_reset      : std_logic                         := '0';
 
+    signal fisken_reset     : std_logic                         := '0';
 begin
     led_o(7)            <= blink;
     led_o(6 downto 5)   <= btn_out;
@@ -53,12 +55,13 @@ begin
     gpio0(32)           <= clock;
     gpio0(31 downto  0) <= mem_out;
 
-
     fisken_o(0)         <= clock;
+
+    fisken_reset        <= reset or timer_reset;
 
     dut : entity work.custom_timer
     generic map(
-        DEF_PRESCALER   => 25000 -- 1s pr tick(?)
+        DEF_PRESCALER   => 2500 -- 25000 -> 1ms pr tick
     )
     port map (
         cc_0_out        => cc_0_out,
@@ -79,9 +82,9 @@ begin
         interrupt_src   => interrupt_src,
         interrupt       => interrupt,
 
-        start           => start,
-        stop            => stop,
-        reset           => reset,
+        start           => timer_start,
+        stop            => timer_stop,
+        reset           => fisken_reset,
         clk             => clk
     );
 
@@ -122,22 +125,29 @@ begin
         if (reset = '1') then
             state := 0;
         elsif (rising_edge(clk)) then
-            cc_0_in    <= (others => '0');
-            cc_0_latch <= '0';
+            cc_0_in     <= (others => '0');
+            cc_0_latch  <= '0';
+            timer_start <= '0';
+            timer_reset <= '0';
             case state is
                 when 0 =>
-                    if btn_i(0) = '1' then
-                        state      := state + 1;
-                        cc_0_in    <= x"00000005";
-                        cc_0_latch <= '1';
+                    if btn_i(0) = '0' then
+                        state       := state + 1;
+                        cc_0_in     <= x"00000005";
+                        cc_0_latch  <= '1';
                     end if;
                 when 1 =>
+                    if btn_i(0) = '1' then
+                        state       := state + 1;
+                        timer_start <= '1';
+                    end if;
+                when 2 =>
                     if btn_i(0) = '0' then
-                        state      := 0;
-                        start      <= '1';
+                        state       := 0;
+                        timer_reset <= '1';
                     end if;
                 when others =>
-                -- Do nothing
+                    -- Do nothing
             end case;
         end if;
     end process p_timer_start;

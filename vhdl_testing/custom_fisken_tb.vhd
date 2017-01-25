@@ -10,14 +10,13 @@ end;
 
 architecture custom_fisken_tb of custom_fisken_tb is
 
-    signal   clk        : std_logic := '0';
-    signal   reset      : std_logic := '0';
-    signal   btn_i      : std_logic_vector(3 downto 0) := "0011";
-    signal   fisken_i   : std_logic_vector(31 downto 0) := x"00000000";
-    signal   fisken_o   : std_logic_vector(31 downto 0);
-    signal   led_o      : std_logic_vector( 7 downto 0);
     signal   gpio0      : std_logic_vector(35 downto 0);
-
+    signal   led_o      : std_logic_vector( 7 downto 0);
+    signal   fisken_o   : std_logic_vector(31 downto 0);
+    signal   fisken_i   : std_logic_vector(31 downto 0) := x"00000000";
+    signal   btn_i      : std_logic_vector(3 downto 0) := "0011";
+    signal   reset      : std_logic := '0';
+    signal   clk        : std_logic := '0';
 begin
     dut : entity work.custom_fisken
     port map (
@@ -37,22 +36,43 @@ begin
 
     stimulus : process
     begin
-        wait for 5 ns; reset  <= '1';
-        wait for 4 ns; reset  <= '0';
+        -- Release reset asynchronously
+        reset           <= '1'; wait for 64 ns;
+        reset           <= '0'; wait for 25 us;
 
-        wait for 200 us;
-        fisken_i <= x"0000007e";
-        wait for 200 us;
-        fisken_i <= x"00000061";
-        wait for 200 us;
-        fisken_i <= x"00000030";
-        wait for 200 us;
-        fisken_i <= x"00000031";
-        wait for 200 us;
-        fisken_i <= x"00000000";
+        -- Button press
+        wait until rising_edge(clk);
+        btn_i(0) <= '0';
+        wait until rising_edge(clk);
+        btn_i(0) <= '1';
+        wait for 10 us;
 
-        wait for 200 us;
-		std.env.stop(1); --! Gracefully stops the simulation
+        -- Wait for trigger
+        wait until rising_edge(led_o(4));
+        wait for 10 us;
+
+        -- Button press
+        wait until rising_edge(clk);
+        btn_i(0) <= '0';
+        wait until rising_edge(clk);
+        btn_i(0) <= '1';
+        wait for 10 us;
+
+
+        -- Button press
+        wait until rising_edge(clk);
+        btn_i(0) <= '0';
+        wait until rising_edge(clk);
+        btn_i(0) <= '1';
+        wait for 10 us;
+
+        -- Wait for trigger
+        wait until rising_edge(led_o(4));
+        wait for 10 us;
+
+
+        wait for 10 us;
+		std.env.stop(0); --! Gracefully stops the simulation
         wait;
     end process stimulus;
 
