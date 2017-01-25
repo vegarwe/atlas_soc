@@ -35,6 +35,9 @@ architecture custom_timer_tb of custom_timer_tb is
     signal reset            : std_logic                         := '0';
 begin
     dut : entity work.custom_timer
+    generic map(
+        DEF_PRESCALER   => 40
+    )
     port map (
         cc_0_out        => cc_0_out,
         cc_0_in         => cc_0_in,
@@ -84,7 +87,7 @@ begin
         cc_1_latch      <= '0';
         wait for 25 us;
 
-        -- Set prescaler
+        -- Set prescaler (overriding DEF_PRESCALER)
         wait until rising_edge(clk);
         prescaler       <= x"00000032"; -- 0x2710 == 400us pr counter tick
         prescaler_latch <= '1';

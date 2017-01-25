@@ -3,6 +3,9 @@ library ieee;
     use ieee.std_logic_1164.all;
 
 entity custom_timer is
+    generic(
+        DEF_PRESCALER   : natural                               := 0
+    );
     port(
         cc_0_out        : out   std_logic_vector(31 downto 0)   := (others => '0');
         cc_0_in         : in    std_logic_vector(31 downto 0);
@@ -37,7 +40,7 @@ architecture behaviour of custom_timer is
     signal cc_1_src     : std_logic := '0';
 
     signal started      : std_logic := '0';
-    signal prescaler_val: natural   :=  0;
+    signal prescaler_val: natural   :=  DEF_PRESCALER;
 begin
 
     interrupt           <= cc_0_int or cc_1_int;
@@ -71,14 +74,13 @@ begin
             if started = '1' then
                 pre_counter := pre_counter + 1;
 
-                if pre_counter = prescaler_val then
+                if pre_counter >= prescaler_val then
                     counter     := counter + 1;
                     pre_counter := 0;
                 end if;
 
-                if cc_0_int = '1' then
-                    cc_0_int    <= '0';
-                elsif int_value > 0 and counter = int_value then
+                cc_0_int        <= '0';
+                if int_value > 0 and counter = int_value then
                     cc_0_int    <= '1';
                     cc_0_src    <= '1';
                     counter     := 0;
@@ -114,14 +116,13 @@ begin
             if started = '1' then
                 pre_counter := pre_counter + 1;
 
-                if pre_counter = prescaler_val then
+                if pre_counter >= prescaler_val then
                     counter     := counter + 1;
                     pre_counter := 0;
                 end if;
 
-                if cc_1_int = '1' then
-                    cc_1_int    <= '0';
-                elsif int_value > 0 and counter = int_value then
+                cc_1_int        <= '0';
+                if int_value > 0 and counter = int_value then
                     cc_1_int    <= '1';
                     cc_1_src    <= '1';
                     counter     := 0;
