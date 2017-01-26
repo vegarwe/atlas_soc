@@ -32,7 +32,8 @@ int main(int argc, char ** argv)
     }
 
     // Get the number of times to blink the LEDS from the passed in arguments
-    blink_times = atoi(argv[1]);
+    //blink_times = atoi(argv[1]);
+    blink_times = strtoul(argv[1], NULL, 0); // Drop overflow check...
 
     // Open up the /dev/mem device (aka, RAM)
     devmem_fd = open("/dev/mem", O_RDWR | O_SYNC);

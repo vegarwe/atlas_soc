@@ -51,7 +51,16 @@ architecture behaviour of custom_fisken is
 begin
     gpio0(35 downto 33) <= "111";
     gpio0(32)           <= clk;
-    gpio0(31 downto  0) <= x"55aa1100";
+    --gpio0(31 downto  0) <= x"55aa1100";
+    gpio0(0)            <= s0_address;
+    gpio0(1)            <= s0_read;
+    gpio0(2)            <= s0_write;
+
+    gpio0(3)            <= s0_writedata(0);
+    gpio0(4)            <= s0_writedata(1);
+    gpio0(5)            <= s0_writedata(2);
+    gpio0(6)            <= s0_writedata(3);
+    gpio0(7)            <= s0_writedata(4);
 
     led_o( 7)           <= blink;
     led_o( 6 downto  5) <= btn_out;
@@ -62,7 +71,7 @@ begin
 
     timer_0 : entity work.custom_timer
     generic map(
-        DEF_PRESCALER   => 2500 -- 25000 -> 1ms pr tick
+        DEF_PRESCALER   => 25000 -- 25000 -> 1ms pr tick
     )
     port map (
         cc_0_out        => cc_0_out,
@@ -119,12 +128,16 @@ begin
         end if;
     end process p_button;
 
-    -- Controler timer with button
+    -- Control timer0.cc0 with button0
     p_timer_start : process (clk, reset) is
         variable state : integer := 0;
     begin
         if (reset = '1') then
-            state := 0;
+            state       := 0;
+            cc_0_in     <= (others => '0');
+            cc_0_latch  <= '0';
+            timer_start <= '0';
+            timer_reset <= '0';
         elsif (rising_edge(clk)) then
             cc_0_in     <= (others => '0');
             cc_0_latch  <= '0';
@@ -134,7 +147,7 @@ begin
                 when 0 =>
                     if btn_i(0) = '0' then
                         state       := state + 1;
-                        cc_0_in     <= x"000036b0";
+                        cc_0_in     <= x"00001f40"; -- 0x1f40 * 25000 == 8s
                       --cc_0_in     <= x"00000005"; -- For simulation (testing)
                         cc_0_latch  <= '1';
                     end if;
@@ -158,19 +171,40 @@ begin
         end if;
     end process p_timer_start;
 
+    -- Start timer0.cc1 with button1
+    p_timer_start : process (clk, reset) is
+        variable state : integer := 0;
+    begin
+        if (reset = '1') then
+            state := 0;
+            capture_1   <= '0';
+        elsif (rising_edge(clk)) then
+            capture_1   <= '0';
+            case state is
+                when 0 =>
+                    if btn_i(0) = '0' then
+                        state       := state + 1;
+                        capture_1   <= '1';
+                    end if;
+                when 1 =>
+                    if btn_i(0) = '1' then
+                        state       := 0;
+                    end if;
+                when others =>
+                    -- Do nothing
+            end case;
+        end if;
+    end process p_timer_start;
+
     -- Read operations performed on the Avalon-MM Slave interface
     p_memory_read : process (clk, reset) is
-        variable counter : natural := 0;
     begin
         if (reset = '1') then
             s0_readdata <= (others => '0');
-            counter := 0;
         elsif (rising_edge(clk)) then
             s0_readdata <= (others => '0');
-            if s0_read = '1' and s0_address = '1' then
-                counter := counter + 1;
-                s0_readdata <= std_logic_vector(to_unsigned(counter, s0_readdata'length));
-                led(0)  <= not led(0);
+            if s0_read = '1' and s0_address = '0' then -- Will s0_address ever be 1?
+                s0_readdata <= cc_0_out;
             end if;
         end if;
     end process p_memory_read;
@@ -179,10 +213,12 @@ begin
     p_memory_write : process (clk, reset) is
     begin
         if (reset = '1') then
-            --
+            cc_0_latch      <= '0';
         elsif (rising_edge(clk)) then
-            if s0_write = '1' and s0_address = '1' then
-                led(1)  <= not led(1);
+            cc_0_latch      <= '0';
+            if s0_write = '1' and s0_address = '0' then
+                cc_1_in     <= s0_writedata;
+                cc_1_latch  <= '1';
             end if;
         end if;
     end process p_memory_write;
