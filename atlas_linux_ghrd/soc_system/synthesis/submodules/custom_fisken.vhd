@@ -162,11 +162,11 @@ begin
     p_memory_read : process (clk, reset) is
         variable counter : natural := 0;
     begin
-        s0_readdata <= (others => '0');
-
         if (reset = '1') then
+            s0_readdata <= (others => '0');
             counter := 0;
         elsif (rising_edge(clk)) then
+            s0_readdata <= (others => '0');
             if s0_read = '1' and s0_address = '1' then
                 counter := counter + 1;
                 s0_readdata <= std_logic_vector(to_unsigned(counter, s0_readdata'length));
