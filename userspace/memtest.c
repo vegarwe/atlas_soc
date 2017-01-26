@@ -13,6 +13,9 @@
 #define HPS_TO_FPGA_LW_SPAN 0x0020000
 
 // export CROSS_COMPILE=/home/vegarwe/devel/atlas_soc/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf-
+//
+// export CROSS_COMPILE="'C:/Program Files (x86)/Linaro/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09/bin/arm-linux-gnueabihf-'"
+// /c/MinGW/msys/1.0/bin/make
 
 int main(int argc, char ** argv)
 {
@@ -50,16 +53,15 @@ int main(int argc, char ** argv)
     custom_led_map = (uint32_t*)(lw_bridge_map + CUSTOM_LEDS_0_BASE);
 
     // Blink the LED three times
-    for(uint32_t i = 0; i < 3; ++i) {
-        *custom_led_map = 0xffffffff;
-        usleep(250000);
-        *custom_led_map = 0;
-        usleep(250000);
-    }
+    //for(uint32_t i = 0; i < 3; ++i) {
+    //    *custom_led_map = 0xffffffff;
+    //    usleep(250000);
+    //    *custom_led_map = 0;
+    //    usleep(250000);
+    //}
 
     printf("Setting custom_led_map to %u\n", blink_times);
     *custom_led_map = blink_times;
-
     usleep(250000);
 
     blink_times = *custom_led_map;
