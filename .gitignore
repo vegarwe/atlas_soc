@@ -1,0 +1,15 @@
+db/
+incremental_db/
+soc_system.asm.rpt
+soc_system.done
+soc_system.fit.rpt
+soc_system.fit.smsg
+soc_system.fit.summary
+soc_system.flow.rpt
+soc_system.map.rpt
+soc_system.map.smsg
+soc_system.map.summary
+soc_system.sta.rpt
+soc_system.sta.summary
+*.vhd.bak
+*.sv.bak
