@@ -83,7 +83,7 @@ begin
                 if int_value > 0 and counter = int_value then
                     cc_0_int    <= '1';
                     cc_0_src    <= '1';
-                    counter     := 0;
+                    --counter     := 0; -- Don't really want automatic reset
                 end if;
             end if;
         end if;
@@ -125,7 +125,7 @@ begin
                 if int_value > 0 and counter = int_value then
                     cc_1_int    <= '1';
                     cc_1_src    <= '1';
-                    counter     := 0;
+                    --counter     := 0; -- Don't really want automatic reset
                 end if;
             end if;
         end if;

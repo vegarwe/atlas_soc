@@ -5,7 +5,6 @@ export CROSS_COMPILE=/home/vegarwe/devel/atlas_soc/gcc-linaro-arm-linux-gnueabih
 Ethernet chip: KSZ9031RN
 
 ## u-boot-socfpga
-
 HEAD detached at rel_socfpga_v2013.01.01_15.09.01_pr
 https://github.com/altera-opensource/u-boot-socfpga.git
 
