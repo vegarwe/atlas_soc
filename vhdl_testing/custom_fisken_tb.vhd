@@ -9,30 +9,39 @@ entity custom_fisken_tb is
 end;
 
 architecture custom_fisken_tb of custom_fisken_tb is
+    signal   gpio0          : std_logic_vector(35 downto 0);
+    signal   led_o          : std_logic_vector( 7 downto 0);
+    signal   btn_i          : std_logic_vector( 3 downto 0)     := "0011";
 
-    signal   gpio0      : std_logic_vector(35 downto 0);
-    signal   led_o      : std_logic_vector( 7 downto 0);
-    signal   fisken_o   : std_logic_vector(31 downto 0);
-    signal   fisken_i   : std_logic_vector(31 downto 0) := x"00000000";
-    signal   btn_i      : std_logic_vector(3 downto 0) := "0011";
-    signal   reset      : std_logic := '0';
-    signal   clk        : std_logic := '0';
+    signal   s0_address     : std_logic                         := '0';
+    signal   s0_read        : std_logic                         := '0';
+    signal   s0_write       : std_logic                         := '0';
+    signal   s0_readdata    : std_logic_vector(31 downto 0);
+    signal   s0_writedata   : std_logic_vector(31 downto 0)     := (others => '0');
+
+    signal   reset          : std_logic                         := '0';
+    signal   clk            : std_logic                         := '0';
 begin
     dut : entity work.custom_fisken
     port map (
-       gpio0    => gpio0,
-       led_o    => led_o,
-       fisken_o => fisken_o,
-       fisken_i => fisken_i,
-       btn_i    => btn_i,
-       reset    => reset,
-       clk      => clk
+        gpio0           => gpio0,
+        led_o           => led_o,
+        btn_i           => btn_i,
+
+        s0_address      => s0_address,
+        s0_read         => s0_read,
+        s0_write        => s0_write,
+        s0_readdata     => s0_readdata,
+        s0_writedata    => s0_writedata,
+
+        reset           => reset,
+        clk             => clk
     );
 
-    clock : process
+    p_clock : process
     begin
         wait for 20 ns; clk  <= not clk;
-    end process clock;
+    end process p_clock;
 
     stimulus : process
     begin
@@ -72,6 +81,53 @@ begin
         -- Button press (stop)
         wait until rising_edge(led_o(4));
         wait for 10 us;
+
+
+        -- Read memory
+        wait until rising_edge(clk);
+        s0_read         <= '1';
+        s0_address      <= '1';
+        wait until rising_edge(clk);
+        s0_read         <= '0';
+        s0_address      <= '0';
+        wait for  1 us;
+
+        wait until rising_edge(clk);
+        s0_read         <= '1';
+        s0_address      <= '1';
+        wait until rising_edge(clk);
+        s0_read         <= '0';
+        s0_address      <= '0';
+        wait for  1 us;
+
+        wait until rising_edge(clk);
+        s0_read         <= '1';
+        s0_address      <= '1';
+        wait until rising_edge(clk);
+        s0_read         <= '0';
+        s0_address      <= '0';
+        wait for  1 us;
+
+        -- Write memory
+        wait until rising_edge(clk);
+        s0_write        <= '1';
+        s0_address      <= '1';
+        s0_writedata    <= x"12345678";
+        wait until rising_edge(clk);
+        s0_write        <= '0';
+        s0_address      <= '0';
+        s0_writedata    <= (others => '0');
+        wait for  1 us;
+
+        wait until rising_edge(clk);
+        s0_write        <= '1';
+        s0_address      <= '1';
+        s0_writedata    <= x"00221133";
+        wait until rising_edge(clk);
+        s0_write        <= '0';
+        s0_address      <= '0';
+        s0_writedata    <= (others => '0');
+        wait for  1 us;
 
 
         wait for 10 us;
