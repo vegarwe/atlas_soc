@@ -49,85 +49,116 @@ begin
         reset           <= '1'; wait for 64 ns;
         reset           <= '0'; wait for 25 us;
 
+        ---- Button press (start)
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '0';
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '1';
+        --wait for 10 us;
+
+        ---- Wait for trigger
+        --wait until rising_edge(led_o(4));
+        --wait for 10 us;
+
+        ---- Button press (stop)
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '0';
+        --wait until rising_edge(clk);
+        --wait until rising_edge(clk);
+        --wait until rising_edge(clk);
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '1';
+        --wait for 10 us;
+
+
+        ---- Button press (start, second time)
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '0';
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '1';
+        --wait for 10 us;
+
+        ---- Wait for trigger
+        --wait until rising_edge(led_o(4));
+        --wait for 10 us;
+
+        ---- Button press (stop)
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '0';
+        --wait until rising_edge(clk);
+        --wait until rising_edge(clk);
+        --wait until rising_edge(clk);
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '1';
+        --wait for 10 us;
+
+
+        ---- Test 2
+        -----------------------------------
+        ---- Button press (start)
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '0';
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '1';
+        --wait for 10 us;
+
+        ---- Write memory
+        --wait until rising_edge(clk);
+        --s0_write        <= '1';
+        --s0_writedata    <= x"00000003";
+        --wait until rising_edge(clk);
+        --s0_write        <= '0';
+        --s0_writedata    <= (others => '0');
+
+        ---- Wait for trigger (after writing new counter to memory)
+        --wait until rising_edge(led_o(3));
+        --wait for 10 us;
+
+        ---- Button press (stop)
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '0';
+        --wait until rising_edge(clk);
+        --btn_i(0) <= '1';
+        --wait for 10 us;
+
+
+
+
+
+
+
+
+
+        -- Test 3
+        ---------------------------------
         -- Button press (start)
         wait until rising_edge(clk);
         btn_i(0) <= '0';
         wait until rising_edge(clk);
         btn_i(0) <= '1';
+        wait for 400 us;
+
+        -- Button press (capture)
+        wait until rising_edge(clk);
+        btn_i(1) <= '0';
+        wait until rising_edge(clk);
+        btn_i(1) <= '1';
         wait for 10 us;
-
-        -- Wait for trigger
-        wait until rising_edge(led_o(4));
-        wait for 10 us;
-
-        -- Button press (stop)
-        wait until rising_edge(clk);
-        btn_i(0) <= '0';
-        wait until rising_edge(clk);
-        wait until rising_edge(clk);
-        wait until rising_edge(clk);
-        wait until rising_edge(clk);
-        btn_i(0) <= '1';
-        wait for 10 us;
-
-
-        -- Button press (start)
-        wait until rising_edge(clk);
-        btn_i(0) <= '0';
-        wait until rising_edge(clk);
-        btn_i(0) <= '1';
-        wait for 10 us;
-
-        -- Button press (stop)
-        wait until rising_edge(led_o(4));
-        wait for 10 us;
-
 
         -- Read memory
         wait until rising_edge(clk);
         s0_read         <= '1';
-        s0_address      <= '1';
         wait until rising_edge(clk);
         s0_read         <= '0';
-        s0_address      <= '0';
         wait for  1 us;
 
+        -- Button press (stop)
         wait until rising_edge(clk);
-        s0_read         <= '1';
-        s0_address      <= '1';
+        btn_i(0) <= '0';
         wait until rising_edge(clk);
-        s0_read         <= '0';
-        s0_address      <= '0';
-        wait for  1 us;
+        btn_i(0) <= '1';
+        wait for 10 us;
 
-        wait until rising_edge(clk);
-        s0_read         <= '1';
-        s0_address      <= '1';
-        wait until rising_edge(clk);
-        s0_read         <= '0';
-        s0_address      <= '0';
-        wait for  1 us;
-
-        -- Write memory
-        wait until rising_edge(clk);
-        s0_write        <= '1';
-        s0_address      <= '1';
-        s0_writedata    <= x"12345678";
-        wait until rising_edge(clk);
-        s0_write        <= '0';
-        s0_address      <= '0';
-        s0_writedata    <= (others => '0');
-        wait for  1 us;
-
-        wait until rising_edge(clk);
-        s0_write        <= '1';
-        s0_address      <= '1';
-        s0_writedata    <= x"00221133";
-        wait until rising_edge(clk);
-        s0_write        <= '0';
-        s0_address      <= '0';
-        s0_writedata    <= (others => '0');
-        wait for  1 us;
 
 
         wait for 10 us;

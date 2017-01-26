@@ -23,7 +23,7 @@ end entity custom_fisken;
 architecture behaviour of custom_fisken is
     signal blink            : std_logic                         := '0';
     signal btn_out          : std_logic_vector( 1 downto 0)     := (others => '0');
-    signal led              : std_logic_vector( 3 downto 0)     := (others => '0');
+    signal led              : std_logic_vector( 2 downto 0)     := (others => '0');
 
     -- Timer0
     signal cc_0_out         : std_logic_vector(31 downto 0);
@@ -65,7 +65,8 @@ begin
     led_o( 7)           <= blink;
     led_o( 6 downto  5) <= btn_out;
     led_o( 4)           <= interrupt_src(0);
-    led_o( 3 downto  0) <= led;
+    led_o( 3)           <= interrupt_src(1);
+    led_o( 2 downto  0) <= led;
 
     timer_reset_comb    <= reset or timer_reset;
 
@@ -129,7 +130,7 @@ begin
     end process p_button;
 
     -- Control timer0.cc0 with button0
-    p_timer_start : process (clk, reset) is
+    p_timer0_cc0_start : process (clk, reset) is
         variable state : integer := 0;
     begin
         if (reset = '1') then
@@ -169,10 +170,10 @@ begin
                     -- Do nothing
             end case;
         end if;
-    end process p_timer_start;
+    end process p_timer0_cc0_start;
 
     -- Start timer0.cc1 with button1
-    p_timer_start : process (clk, reset) is
+    p_timer0_cc1_capture : process (clk, reset) is
         variable state : integer := 0;
     begin
         if (reset = '1') then
@@ -182,19 +183,19 @@ begin
             capture_1   <= '0';
             case state is
                 when 0 =>
-                    if btn_i(0) = '0' then
+                    if btn_i(1) = '0' then
                         state       := state + 1;
                         capture_1   <= '1';
                     end if;
                 when 1 =>
-                    if btn_i(0) = '1' then
+                    if btn_i(1) = '1' then
                         state       := 0;
                     end if;
                 when others =>
                     -- Do nothing
             end case;
         end if;
-    end process p_timer_start;
+    end process p_timer0_cc1_capture;
 
     -- Read operations performed on the Avalon-MM Slave interface
     p_memory_read : process (clk, reset) is
@@ -204,7 +205,7 @@ begin
         elsif (rising_edge(clk)) then
             s0_readdata <= (others => '0');
             if s0_read = '1' and s0_address = '0' then -- Will s0_address ever be 1?
-                s0_readdata <= cc_0_out;
+                s0_readdata <= cc_1_out;
             end if;
         end if;
     end process p_memory_read;
@@ -213,9 +214,9 @@ begin
     p_memory_write : process (clk, reset) is
     begin
         if (reset = '1') then
-            cc_0_latch      <= '0';
+            cc_1_latch      <= '0';
         elsif (rising_edge(clk)) then
-            cc_0_latch      <= '0';
+            cc_1_latch      <= '0';
             if s0_write = '1' and s0_address = '0' then
                 cc_1_in     <= s0_writedata;
                 cc_1_latch  <= '1';
