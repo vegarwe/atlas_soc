@@ -12,6 +12,7 @@ https://github.com/altera-opensource/u-boot-socfpga.git
 ## Resources:
 * https://rocketboards.org/foswiki/view/Documentation/EmbeddedLinuxBeginnerSGuide
 * https://eewiki.net/display/linuxonarm/DE0-Nano-SoC+Kit
+* https://github.com/ikwzm/FPGA-SoC-Linux
 
 ## Programing FPGA
 To program with quartus, choose 5CSEMA4 (use chain file: soc_system.cdf)
