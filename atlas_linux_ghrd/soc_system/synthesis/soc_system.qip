@@ -7149,11 +7149,6 @@ set_global_assignment -entity "custom_leds" -library "soc_system" -name IP_COMPO
 set_global_assignment -entity "custom_leds" -library "soc_system" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
 set_global_assignment -entity "custom_leds" -library "soc_system" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "custom_leds" -library "soc_system" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "custom_fisken" -library "soc_system" -name IP_COMPONENT_NAME "Y3VzdG9tX2Zpc2tlbg=="
-set_global_assignment -entity "custom_fisken" -library "soc_system" -name IP_COMPONENT_DISPLAY_NAME "Q3VzdG9tIEZpc2s="
-set_global_assignment -entity "custom_fisken" -library "soc_system" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
-set_global_assignment -entity "custom_fisken" -library "soc_system" -name IP_COMPONENT_INTERNAL "Off"
-set_global_assignment -entity "custom_fisken" -library "soc_system" -name IP_COMPONENT_VERSION "MS4w"
 set_global_assignment -entity "soc_system_button_pio" -library "soc_system" -name IP_COMPONENT_NAME "c29jX3N5c3RlbV9idXR0b25fcGlv"
 set_global_assignment -entity "soc_system_button_pio" -library "soc_system" -name IP_COMPONENT_DISPLAY_NAME "UElPIChQYXJhbGxlbCBJL08p"
 set_global_assignment -entity "soc_system_button_pio" -library "soc_system" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
@@ -7319,7 +7314,6 @@ set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::qua
 set_global_assignment -library "soc_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_jtag_interface.sdc"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_dipsw_pio.v"]
 set_global_assignment -library "soc_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/custom_leds.sv"]
-set_global_assignment -library "soc_system" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/custom_fisken.vhd"]
 set_global_assignment -library "soc_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/soc_system_button_pio.v"]
 
 set_global_assignment -entity "altera_reset_controller" -library "soc_system" -name IP_TOOL_NAME "altera_reset_controller"

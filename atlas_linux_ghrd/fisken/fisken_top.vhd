@@ -2,7 +2,7 @@ library ieee;
     use ieee.numeric_std.all;
     use ieee.std_logic_1164.all;
 
-entity custom_fisken is
+entity fisken_top is
     port(
         gpio0           : inout std_logic_vector(35 downto 0)   := (others => '0');
         led_o           : out   std_logic_vector( 7 downto 0)   := x"00";
@@ -18,9 +18,9 @@ entity custom_fisken is
         reset           : in    std_logic;
         clk             : in    std_logic
     );
-end entity custom_fisken;
+end entity fisken_top;
 
-architecture behaviour of custom_fisken is
+architecture behaviour of fisken_top is
     signal blink            : std_logic                         := '0';
     signal btn_out          : std_logic_vector( 1 downto 0)     := (others => '0');
     signal led              : std_logic_vector( 2 downto 0)     := (others => '0');
@@ -70,7 +70,7 @@ begin
 
     timer_reset_comb    <= reset or timer_reset;
 
-    timer_0 : entity work.custom_timer
+    timer_0 : entity work.fisken_timer
     generic map(
         DEF_PRESCALER   => 25000 -- 25000 -> 1ms pr tick
     )

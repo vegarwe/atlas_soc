@@ -18,7 +18,8 @@ module custom_leds
     output logic [7:0] leds
 );
 
-custom_fisken(
+fisken_top
+(
         .gpio0          (gpio0),
         .led_o          (leds),
         .btn_i          (button_in_port),

@@ -2,7 +2,7 @@ library ieee;
     use ieee.numeric_std.all;
     use ieee.std_logic_1164.all;
 
-entity custom_timer is
+entity fisken_timer is
     generic(
         DEF_PRESCALER   : natural                               := 0
     );
@@ -30,9 +30,9 @@ entity custom_timer is
         reset           : in    std_logic;
         clk             : in    std_logic
     );
-end entity custom_timer;
+end entity fisken_timer;
 
-architecture behaviour of custom_timer is
+architecture behaviour of fisken_timer is
     signal cc_0_int     : std_logic := '0';
     signal cc_0_src     : std_logic := '0';
 
