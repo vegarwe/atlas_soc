@@ -1,6 +1,6 @@
 ## DEO-Nano SoC: What is it?
 
-- [User manual](ftp://ftp.altera.com/up/pub/Altera_Material/Boards/DE0-Nano-SoC/DE0_Nano_SoC_User_Manual.pdf)
+- [User manual](http://www.terasic.com.tw/attachment/archive/941/DE0-Nano-SoC_User_manual.pdf)
   - I wish I had read it all...
 - FPGA matrix and Hard Processor System (HPS)
   - 2x high speed buses (on in each direction)
