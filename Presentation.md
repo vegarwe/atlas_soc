@@ -16,6 +16,8 @@
   - A/D converter
 - DEO-Nano SoC System Builder
   - Never took the time to look into it
+
+## Getting started
 - Embedded Linux beginners guide (RocketBoards)
   - Starts with a built system
   - Nice to follow steps
@@ -37,6 +39,8 @@
     - Able to convert to a file that can be loaded by u-boot
   - Wanted to run VHDL, not System Verilog
   - Was able to flash directly onto the FPGA
+
+## Creating something in VHDL
 - VHDL
   - custom\_leds.v
   - GHDL simulation
@@ -49,3 +53,20 @@
   - Controlled either by ram read/write or button presses
   - Events routed to led(s)
 
+## Experiences with VHDL
+- Lets look at the code
+- Wire vs variable
+  <!---
+    State of a wire: 
+  -->
+- Type system
+- Everything happens in parallel
+- Something always happens
+- Very often end up in finite state machines
+- Just smaller primitives
+
+## Use cases
+- Digital signal processing (duh...!)
+- Filters, Fourier transforms
+- Data preprocessing (down sampling, ...)
+- Understanding Digital Signal Processing by Richard G. Lyons
