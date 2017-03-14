@@ -6,6 +6,9 @@
   - 2x high speed buses (on in each direction)
   - 1x low speed bidirectional bus
 - What are peripherals?
+  <!--
+    - Memory mapped I/O is typically how the nRF device works
+  -->
 - HPS peripherals
   - Led, button, G-sensor
   - Usb, uart, ram, ethernet, sd card
@@ -16,6 +19,12 @@
   - A/D converter
 - DEO-Nano SoC System Builder
   - Never took the time to look into it
+- Original image
+  <!---
+    - Simulates a network card
+    - Just connect power and usb, will give you machine an ip address
+    - Also simulates mass storage device
+  -->
 
 ## Getting started
 - [Embedded Linux beginners guide](https://rocketboards.org/foswiki/view/Documentation/EmbeddedLinuxBeginnerSGuide) (RocketBoards)
@@ -80,18 +89,29 @@
     integer i -> to_signed(i, S'length) -> std_logic_vector(S)
   -->
 - Everything happens in parallel
+  - Something always happens
   <!---
     There is always a clock and it's always ticking
   -->
-- Something always happens
 - Very often end up with finite state machines
 - Just smaller primitives
+  <!--
+    - It really takes a long time to do anything
+    - Simulation is slow
+    - Lots of new pit-falls to fall into
+    - New workflow
+    - But:
+      - Can do 'unit testing'
+      - Can do test automation
+      - Script automatic build (Jenkins)
+  -->
 
 ## Use cases
-- Digital signal processing (duh...!)
+- Digital signal processing (duh...!) and blinking leds (obviously)
 - Filters, Fourier transforms
 - Data preprocessing (down sampling, ...)
 - Understanding Digital Signal Processing by Richard G. Lyons
+- Skytesimulator
 
 ## Resources
 - Open source book [Free range VHDL](http://kanskje.de/free_range_vhdl.pdf) [src](https://github.com/fabriziotappero/Free-Range-VHDL-book)
